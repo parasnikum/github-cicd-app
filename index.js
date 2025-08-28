@@ -15,7 +15,7 @@ const webhookSchema = new mongoose.Schema({
 
 const Webhook = mongoose.model("Webhook", webhookSchema);
 
-app.get("/", async (req, res) => {
+app.post("/webhook", async (req, res) => {
   try {
     console.log("req come");
     const webhookEntry = new Webhook({ payload: req.body });
@@ -27,6 +27,9 @@ app.get("/", async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to save webhook data" });
   }
 });
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "Health 200 !" });
+})
 
 app.listen(3000, () => {
   console.log("Running on port 3000");
